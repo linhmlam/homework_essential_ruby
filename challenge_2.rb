@@ -12,10 +12,9 @@ require './challenge_1.rb'
 #   quote from a bank.
 
 loan_quotes = [
-  { "bank" => "Elm Street Bank", "annual_rate" => 0.03875},
-  { "bank" => "Oak Street Bank", "annual_rate" => 0.04076},
-  { "bank" => "Ash Street Bank", "annual_rate" => 0.04000}
-]
+        { "bank" => "Elm Street Bank", "annual_rate" => 0.03875},
+        { "bank" => "Oak Street Bank", "annual_rate" => 0.04076},
+        { "bank" => "Ash Street Bank", "annual_rate" => 0.04000} ]
 
 # Given some parameters of the loan, perhaps entered by a user on a web form:
 
@@ -31,9 +30,17 @@ principal_amount = 200000.0
 #     Line 1 of this file.
 
 # ==============================================================
-# Your code goes here.
-# You shouldn't have to write code or change code anywhere else.
+def pmt(rate, nper, pv)
+  top = rate*pv
+  bottom_right = 1 / ((1+rate)**(nper))
+  bottom = 1 - bottom_right
+  loan_pmt = top / bottom
+  return loan_pmt
+end
 
-# loan_quotes.each ...
-
-# ==============================================================
+loan_quotes.each do |quote|
+  month_pmt = pmt(quote["annual_rate"]/12, number_of_monthly_payments, principal_amount)
+  puts month_pmt
+  puts "The monthly payment from #{quote["bank"]} will be $#{month_pmt}."
+  # How do you get only the last two numbers to show up?
+end
